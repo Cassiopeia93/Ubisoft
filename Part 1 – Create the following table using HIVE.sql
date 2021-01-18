@@ -4,7 +4,7 @@ SELECT TRANSACTION.*,
 FROM   (SELECT t.customerid, 
                Count(DISTINCT t.ip_address) AS nb_address_ip_ltd, 
                Sum(t.amount_eur)            AS amount_eur_utd 
-        FROM   schematransactionzhen t 
+        FROM   schematransactionzhen t --schematransaction name has already been taken so I used 'schematransactionzhen'
         GROUP  BY t.customerid) result 
        JOIN schematransactionzhen TRANSACTION 
          ON result.customerid = TRANSACTION.customerid 
