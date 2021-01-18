@@ -63,3 +63,12 @@ Hadoop 3 introduced Erasure Coding to provide Fault Tolerance. Erasure Coding in
 
 However, since RDDs contain Java objects, they suffer from both Garbage Collection and Java serialization issues, which are expensive operations when the data grows. Unluckily, Spark does not offer any built-in optimization to speed up this kind of processes. Because of this, DataFrames were introduced in the library.
 
+## Part 4 – Optimization
+### In the join function, what is the broadcasting operation used for?
+
+Broadcast join is an important part of Spark SQL's execution engine. When used, it performs a join on two relations by first broadcasting the smaller one to all Spark executors, then evaluating the join criteria with each executor's partitions of the other relation.
+
+### You will find a script below which creates some features. How would you optimize it? Please describe a few potential solutions.
+
+1. Make an inner join insted of full
+.join(F.broadcast(dim_user), on="customerid", how="inner")\
