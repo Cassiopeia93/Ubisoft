@@ -1,3 +1,7 @@
+# Generate a column which gives the number of distinct characters for an address (e.g hello has 4 distinct characters).
+# Generate a column which flags “True” if the address is located in “rue de Paris”.
+
+
 !pip install pyspark
 from datascroller import scroll
 from pyspark import SparkContext, SQLContext
