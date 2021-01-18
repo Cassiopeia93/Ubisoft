@@ -83,3 +83,4 @@ Broadcast join is an important part of Spark SQL's execution engine. When used, 
 
 1. Make an inner join insted of full
 .join(F.broadcast(dim_user), on="customerid", how="inner")\
+2. remove nb_purchases_udf() function and use built in function length(). 
