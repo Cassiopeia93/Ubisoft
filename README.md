@@ -57,3 +57,9 @@ HDFS is highly fault-tolerant. Before Hadoop 3, it handles faults by the process
 HDFS also maintains the replication factor by creating a replica of data on other available machines in the cluster if suddenly one machine fails.
 
 Hadoop 3 introduced Erasure Coding to provide Fault Tolerance. Erasure Coding in HDFS improves storage efficiency while providing the same level of fault tolerance and data durability as traditional replication-based HDFS deployment.
+
+## Part two: 
+### What is the abstraction type in Spark that doesn’t benefit from the engine’s optimization capabilities?
+
+However, since RDDs contain Java objects, they suffer from both Garbage Collection and Java serialization issues, which are expensive operations when the data grows. Unluckily, Spark does not offer any built-in optimization to speed up this kind of processes. Because of this, DataFrames were introduced in the library.
+
