@@ -63,7 +63,18 @@ Hadoop 3 introduced Erasure Coding to provide Fault Tolerance. Erasure Coding in
 
 However, since RDDs contain Java objects, they suffer from both Garbage Collection and Java serialization issues, which are expensive operations when the data grows. Unluckily, Spark does not offer any built-in optimization to speed up this kind of processes. Because of this, DataFrames were introduced in the library.
 
-## Part 4 – Optimization
+## Part three:
+### Furthermore, imagine that the schemaTransaction table contains 100 million transactions for a 10k distinct users over a year of data. How would you write this table to disk in order to optimize subsequent queries on the data?
+
+In Spark SQL caching is a common technique for reusing some computation. It has the potential to speedup other queries that are using the same data.
+n DataFrame API, there are two functions that can be used to cache a DataFrame, cache() and persist():
+df.cache() # see in PySpark docs here
+df.persist() # see in PySpark docs here
+They are almost equivalent, the difference is that persist can take an optional argument storageLevel by which we can specify where the data will be persisted. The default value of the storageLevel for both functions is MEMORY_AND_DISK which means that the data will be stored in memory if there is space for it, otherwise, it will be stored on disk. 
+Caching is a lazy transformation, so immediately after calling the function nothing happens with the data but the query plan is updated by the Cache Manager by adding a new operator — InMemoryRelation. So this is just some information that will be used during the query execution later on when some action is called. Spark will look for the data in the caching layer and read it from there if it is available. If it doesn’t find the data in the caching layer (which happens for sure the first time the query runs), it will become responsible for getting the data there and it will use it immediately afterward.
+
+
+## Part Four – Optimization
 ### In the join function, what is the broadcasting operation used for?
 
 Broadcast join is an important part of Spark SQL's execution engine. When used, it performs a join on two relations by first broadcasting the smaller one to all Spark executors, then evaluating the join criteria with each executor's partitions of the other relation.
