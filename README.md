@@ -46,7 +46,7 @@ compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib
 parameters:{serialization.format=|, field.delim=|}), bucketCols:[], sortCols:[], parameters:{}, skewedInfo:SkewedInfo(skewedColNames:[], skewedColValues:[], skewedColValueLocationMaps:{}), storedAsSubDirectories:false), partitionKeys:[], 
 parameters:{totalSize=2160, numRows=46, rawDataSize=1900, COLUMN_STATS_ACCURATE={"BASIC_STATS":"true"}, numFiles=1, transient_lastDdlTime=1610895410}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, rewriteEnabled:false)	
 
-The totalSize returned in Hive is only the actual size of the table itself, which is only 1 copy, so taking the raw data size 4*1900=7600Kb taking into account the replciation, compression and intermeediate data factor. parameters.
+The totalSize returned in Hive is only the actual size of the table itself, which is only 1 copy, so taking the raw data size 4*1900=7600Kb into account the replication, compression and intermediate data factor parameters.
 
 
 
