@@ -1,3 +1,7 @@
+-- Generate a column which gives the number of distinct IP address LTD (live to date) per customerId.
+-- Generate a column which gives the amount spent UTD (up to date) per customerId.
+
+
 SELECT TRANSACTION.*, 
        result.nb_address_ip_ltd, 
        result.amount_eur_utd 
