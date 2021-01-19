@@ -81,6 +81,10 @@ Broadcast join is an important part of Spark SQL's execution engine. When used, 
 
 ### You will find a script below which creates some features. How would you optimize it? Please describe a few potential solutions.
 
-1. Make an inner join insted of full
-.join(F.broadcast(dim_user), on="customerid", how="inner")\
-2. remove nb_purchases_udf() function and use built in function length(). 
+1.persis store transaction table in mode memory_only or memory_and_disk
+2. code in java with Kryo serializer 
+3. use dataframe (catalyst optimizer, low garbage collection)
+
+extra points: Rdd uses reducebykey instead of groupbykey. 
+use parquet with snappy compression 
+repartition vs coalesce
