@@ -54,7 +54,7 @@ The totalSize returned in Hive is only the actual size of the table itself, whic
 
 ### In the Hadoop ecosystem, which mechanism(s) ensure(s) fault tolerance as far as Data Storage is concerned?
 
-HDFS is highly fault-tolerant. Before Hadoop 3, it handles faults by the process of replica creation. It creates a replica of users’ data on different machines in the HDFS cluster. So whenever if any machine in the cluster goes down, then data is accessible from other machines in which the same copy of data was created.
+HDFS is highly fault-tolerant.  It handles faults by the process of replica creation. It creates a replica of users’ data on different machines in the HDFS cluster. So whenever if any machine in the cluster goes down, then data is accessible from other machines in which the same copy of data was created.
 
 HDFS also maintains the replication factor by creating a replica of data on other available machines in the cluster if suddenly one machine fails.
 
