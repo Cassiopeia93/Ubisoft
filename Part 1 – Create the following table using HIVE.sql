@@ -4,11 +4,14 @@
 
 SELECT TRANSACTION.*, 
        result.nb_address_ip_ltd, 
-       result.amount_eur_utd 
+       Sum(TRANSACTION.amount_eur) 
+         OVER( 
+           partition BY TRANSACTION.customerid 
+           ORDER BY TRANSACTION.order_datetime) amount_eur_utd 
 FROM   (SELECT t.customerid, 
-               Count(DISTINCT t.ip_address) AS nb_address_ip_ltd, 
-               Sum(t.amount_eur)            AS amount_eur_utd 
-        FROM   schematransactionzhen t --schematransaction name has already been taken so I used 'schematransactionzhen'
+               Count(DISTINCT t.ip_address) AS nb_address_ip_ltd 
+        -- Sum(t.amount_eur)            AS amount_eur_utd  
+        FROM   schematransaction t  
         GROUP  BY t.customerid) result 
-       JOIN schematransactionzhen TRANSACTION 
+       JOIN schematransaction TRANSACTION 
          ON result.customerid = TRANSACTION.customerid 
