@@ -62,7 +62,7 @@ HDFS also maintains the replication factor by creating a replica of data on othe
 ## Part two: 
 ### What is the abstraction type in Spark that doesn’t benefit from the engine’s optimization capabilities?
 
-However, since RDDs contain Java objects, they suffer from both Garbage Collection and Java serialization issues, which are expensive operations when the data grows. Unluckily, Spark does not offer any built-in optimization to speed up this kind of processes. Because of this, DataFrames were introduced in the library.
+ RDDs. they suffer from both Garbage Collection and serialization issues, which are expensive operations when the data grows. Unluckily, Spark does not offer any built-in optimization to speed up this kind of processes. Because of this, DataFrames were introduced in the library.
 
 ## Part three:
 ### Furthermore, imagine that the schemaTransaction table contains 100 million transactions for a 10k distinct users over a year of data. How would you write this table to disk in order to optimize subsequent queries on the data?
