@@ -23,25 +23,27 @@ H = 1*3*S/(1-1/4) = 3*S/(3/4) = 4*S
 To estimate it create the table from the query:
 
 _CREATE TABLE schematransactionzhensize row format delimited fields TERMINATED BY '|' stored AS rcfile AS
-SELECT transaction.*, 
+SELECT TRANSACTION.*, 
        result.nb_address_ip_ltd, 
-       result.amount_eur_utd 
-FROM   ( 
-                SELECT   t.customerid, 
-                         count(DISTINCT t.ip_address) AS nb_address_ip_ltd, 
-                         sum(t.amount_eur)            AS amount_eur_utd 
-                FROM     schematransactionzhen t 
-                GROUP BY t.customerid) result 
-JOIN   schematransactionzhen transaction 
-ON     result.customerid = transaction.customerid_
+       Sum(TRANSACTION.amount_eur) 
+         OVER( 
+           partition BY TRANSACTION.customerid 
+           ORDER BY TRANSACTION.order_datetime) amount_eur_utd 
+FROM   (SELECT t.customerid, 
+               Count(DISTINCT t.ip_address) AS nb_address_ip_ltd 
+        -- Sum(t.amount_eur)            AS amount_eur_utd  
+        FROM   schematransaction t  
+        GROUP  BY t.customerid) result 
+       JOIN schematransaction TRANSACTION 
+         ON result.customerid = TRANSACTION.customerid 
 				
-describe extended schemaTransactionZhenSize 
+describe extended schemaTransactionSize 
 
-Table(tableName:schematransactionzhensize, dbName:default, owner:root, createTime:1610895410, lastAccessTime:0, retention:0, 
+Table(tableName:schematransactionsize, dbName:default, owner:root, createTime:1610895410, lastAccessTime:0, retention:0, 
 sd:StorageDescriptor(cols:[FieldSchema(name:customerid, type:int, comment:null), 
 FieldSchema(name:order_date, type:date, comment:null), FieldSchema(name:order_datetime, type:timestamp, comment:null), FieldSchema(name:address, type:string, comment:null), FieldSchema(name:ip_address, type:string, comment:null), 
 FieldSchema(name:amount_eur, type:bigint, comment:null), FieldSchema(name:nb_address_ip_ltd, type:bigint, comment:null), FieldSchema(name:amount_eur_utd, type:bigint, comment:null)], 
-location:hdfs://namenode:8020/user/hive/warehouse/schematransactionzhensize, inputFormat:org.apache.hadoop.hive.ql.io.RCFileInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.RCFileOutputFormat, 
+location:hdfs://namenode:8020/user/hive/warehouse/schematransactionsize, inputFormat:org.apache.hadoop.hive.ql.io.RCFileInputFormat, outputFormat:org.apache.hadoop.hive.ql.io.RCFileOutputFormat, 
 compressed:false, numBuckets:-1, serdeInfo:SerDeInfo(name:null, serializationLib:org.apache.hadoop.hive.serde2.columnar.LazyBinaryColumnarSerDe, 
 parameters:{serialization.format=|, field.delim=|}), bucketCols:[], sortCols:[], parameters:{}, skewedInfo:SkewedInfo(skewedColNames:[], skewedColValues:[], skewedColValueLocationMaps:{}), storedAsSubDirectories:false), partitionKeys:[], 
 parameters:{totalSize=2160, numRows=46, rawDataSize=1900, COLUMN_STATS_ACCURATE={"BASIC_STATS":"true"}, numFiles=1, transient_lastDdlTime=1610895410}, viewOriginalText:null, viewExpandedText:null, tableType:MANAGED_TABLE, rewriteEnabled:false)	
