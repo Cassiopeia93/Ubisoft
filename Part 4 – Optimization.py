@@ -1,5 +1,8 @@
 # You will find a script below which creates some features. How would you optimize it? Please describe a few potential solutions.
 
+# first you need to persist store the transaction table 
+# and then the user table doesn't affect the result so don't need to do the join
+
 def nb_purchases(date):
  return len(date)
 nb_purchases_udf = udf(nb_purchases, IntegerType())
