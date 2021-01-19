@@ -5,13 +5,15 @@ from pyspark.sql import Window
 import pyspark.sql.functions as F 
 
 df = schemaTransaction.withColumn('timestamp',schemaTransaction.order_datetime.astype('Timestamp').cast("long"))
-#df.show()
 
-exclude_current = F.udf(lambda lst: lst[:-1] if lst[:-1] else [0])
+
+exclude_current = F.udf(lambda lst: sum(lst[:-1]) if lst[:-1] else 0)
+
 
 windowSpec = Window.partitionBy("customerid").orderBy("timestamp").rangeBetween(-600, 0)
 df1 =(
     df.withColumn("last_10_Min", exclude_current(F.collect_list("amount_eur").over(windowSpec)))
 )
 
-df1.collect()
+df1.show()
+
