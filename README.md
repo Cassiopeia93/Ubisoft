@@ -85,6 +85,6 @@ Broadcast join is an important part of Spark SQL's execution engine. When used, 
 2. code in java with Kryo serializer 
 3. use dataframe (catalyst optimizer, low garbage collection)
 
-extra points: Rdd uses reducebykey instead of groupbykey. 
-use parquet with snappy compression 
+extra points: Rdd uses reducebykey instead of groupbykey; 
+use parquet with snappy compression ;
 repartition vs coalesce
